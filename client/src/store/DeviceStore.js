@@ -24,6 +24,7 @@ export default class DeviceStore {
             {id: 1, name: 'Iphone 12pro', price: 1300, rating: 5, img: `https://via.placeholder.com/300`},
             {id: 2, name: 'Gg', price: 1000, rating: 3, img: `https://via.placeholder.com/300`},
             {id: 3, name: 'Note 10pro', price: 1100, rating: 5, img: `https://via.placeholder.com/300`},
+            
         ];
 
         this._selectedType = {};
