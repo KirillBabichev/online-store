@@ -1,34 +1,15 @@
-
 import { makeAutoObservable } from 'mobx';
 
 export default class DeviceStore {
     constructor() {
-        this._types = [
-           {id: 1, name: 'Phones'},
-           {id: 2, name: 'Computers'},
-           {id: 3, name: 'Mouses'},
-           {id: 4, name: 'Monitors'},
-           {id: 5, name: 'Keyboards'},
-        ];
-
-        this._brands = [
-            {id: 1, name: 'Samsung'},
-            {id: 2, name: 'Apple'},
-            {id: 3, name: 'Lg'},
-            {id: 4, name: 'Sony'},
-            {id: 5, name: 'Acer'},
-            
-        ];
-
-        this._devices = [
-            {id: 1, name: 'Iphone 12pro', price: 1300, rating: 5, img: `https://via.placeholder.com/300`},
-            {id: 2, name: 'Gg', price: 1000, rating: 3, img: `https://via.placeholder.com/300`},
-            {id: 3, name: 'Note 10pro', price: 1100, rating: 5, img: `https://via.placeholder.com/300`},
-            
-        ];
-
+        this._types = [];
+        this._brands = [];
+        this._devices = [];
         this._selectedType = {};
         this._selectedBrand = {};
+        this._page = 1;
+        this._totalCount = 0;
+        this._limit = 3;
 
         makeAutoObservable(this);
     }
@@ -46,10 +27,25 @@ export default class DeviceStore {
     }
 
     setSelectedTypes(types) {
+        this.setPage(1);
         this._selectedType = types;
     }
+
     setSelectedBrand(brand) {
+        this.setPage(1);
         this._selectedBrand = brand;
+    }
+
+    setTotalCount(count) {
+        this._totalCount = count;
+    }
+    
+    setLimit(limit) {
+        this._limit = limit;
+    }
+
+    setPage(page) {
+        this._page = page
     }
 
     get types() {
@@ -70,5 +66,15 @@ export default class DeviceStore {
 
     get selectedBrand() { 
         return this._selectedBrand;
+    }
+
+    get totalCount() { 
+        return this._totalCount;
+    }
+    get page() { 
+        return this._page;
+    }
+    get limit() { 
+        return this._limit;
     }
 }

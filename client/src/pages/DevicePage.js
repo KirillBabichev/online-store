@@ -1,17 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Container, Col, Image, Row, Card,  Button} from 'react-bootstrap';
-import { observer } from 'mobx-react-lite'
+import { observer } from 'mobx-react-lite';
+import { useParams } from 'react-router-dom';
 
 import star from '../assets/star.png'
+import { fetchOneDevices } from '../api/deviceApi';
 
 const DevicePage = observer(() => {
-    const description = []
-    const device = {id: 3, name: 'Note 10pro', price: 1100, rating: 5, img: `https://via.placeholder.com/300`}
+    const [device, setDevice] = useState({info: []});
+    const {id} = useParams();
+
+    useEffect(()=> {
+        try {
+            fetchOneDevices(id).then(data => {
+                setDevice(data)
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    },[])
+
     return (
         <Container className='mt-3'>
             <Row className='d-flex flex-row'>
                 <Col md={4}>
-                    <Image width={300} height={300} src={device.img} />
+                    <Image width={300} height={300} src={process.env.REACT_APP_API_URL + device.img} />
                 </Col>
                 <Col md={4}>
                     <Row className='d-flex flex-column'>
@@ -35,7 +48,7 @@ const DevicePage = observer(() => {
             </Row>
             <Row className='d-flex flex-column m-3'>
                 <h1>Device info</h1>
-                {description.map((info, index) => (
+                {device?.info.map((info, index) => (
                     <Row
                     key={info.id}
                     style={{background: index % 2 === 0 ? 'lightgray': 'transparent', padding: 10}}
